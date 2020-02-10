@@ -1,0 +1,23 @@
+<domain type='kvm'>
+  <name>debian</name>
+  <memory unit='KB'>1572864</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-0.12'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <source file='/build/debian.img'/>
+      <target dev='hda'/>
+    </disk>
+    <interface type='bridge'>
+      <mac address='66:66:66:66:66:03'/>
+      <source bridge='br0'/>
+      <model type='e1000'/>
+    </interface>
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' keymap='en-us'/>
+  </devices>
+</domain>

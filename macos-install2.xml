@@ -1,0 +1,47 @@
+<domain type='kvm'>
+  <name>macos-install</name>
+  <memory unit='KB'>4572864</memory>
+  <vcpu>4</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-0.12'>hvm</type>
+  </os>
+  <features>
+    <acpi/>
+    <kvm>
+      <hidden state="on"/>
+    </kvm>
+  </features>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <source file='/cont2/macos.img'/>
+      <target dev='hda'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+    </disk>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw'/>
+      <source file='/cont2/macOS-HighSierra.iso'/>
+      <target dev='hdc' bus='ide' snapshot="yes"/>
+      <boot order='1'/>
+    </disk>
+    <interface type='bridge'>
+      <mac address='66:66:66:66:66:88'/>
+      <source bridge='br0'/>
+      <model type='e1000'/>
+    </interface>
+    <video>
+      <model type='qxl' ram='65536' vram='65536' vgamem='16384' heads='1' primary='yes'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </video>
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' keymap='en-us'/>
+  </devices>
+    <qemu:commandline>
+    <qemu:arg value='-device'/>
+    <qemu:arg value='isa-applesmc,osk=ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc'/>
+    <qemu:arg value='-smbios'/>
+    <qemu:arg value='type=2'/>
+    <qemu:arg value='-cpu'/>
+    <qemu:arg value='Penryn,kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,+pcid,+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsave,+xsaveopt,check'/>
+  </qemu:commandline>
+</domain>

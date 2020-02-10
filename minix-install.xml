@@ -1,0 +1,35 @@
+<domain type='kvm'>
+  <name>minix</name>
+  <memory unit='KB'>572864</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-0.12'>hvm</type>
+    <boot dev='cdrom'/>
+    <boot dev='hd'/>
+  </os>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/qemu-kvm</emulator>
+    <disk type='file' device='disk'>
+      <source file='/build/minix.img'/>
+      <target dev='hda'/>
+    </disk>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/iso/minix_R3.3.0-588a35b.iso'/>
+      <target dev='hdc' bus='ide'/>
+      <readonly/>
+      <address type='drive' controller='0' bus='1' unit='0'/>
+    </disk>
+    <interface type='bridge'>
+      <mac address='66:66:66:66:66:01'/>
+      <source bridge='br0'/>
+      <model type='virtio'/>
+    </interface>
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' keymap='en-us'/>
+  </devices>
+  <features>
+    <acpi default="on" toggle="yes" />
+    <apic default="on" toggle="yes" />
+  </features>
+</domain>

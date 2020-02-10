@@ -1,0 +1,31 @@
+<domain type='kvm'>
+  <name>macos-install</name>
+  <memory unit='KB'>2572864</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-0.12'>hvm</type>
+    <boot dev='cdrom'/>
+    <boot dev='hd'/>
+  </os>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <source file='/build/macos.img'/>
+      <target dev='hda'/>
+    </disk>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/iso/Lion10.7_11a494.iso'/>
+      <target dev='hdc' bus='ide'/>
+      <readonly/>
+      <address type='drive' controller='0' bus='1' unit='0'/>
+    </disk>
+    <interface type='bridge'>
+      <mac address='66:66:66:66:66:08'/>
+      <source bridge='br0'/>
+      <model type='virtio'/>
+    </interface>
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' keymap='en-us'/>
+  </devices>
+</domain>

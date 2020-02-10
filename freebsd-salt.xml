@@ -1,0 +1,56 @@
+<domain type='kvm'>
+  <name>freebsd</name>
+  <description>freebsd</description>
+  <memory unit='KB'>1572864</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-i440fx-3.1'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <clock sync="localtime"/>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <source file='/build/freebsd-salt.img'/>
+      <driver name='qemu' type='raw'/>
+      <target dev='hda' bus='virtio'/>
+    </disk>
+    <interface type='bridge'>
+      <mac address='66:66:66:66:66:04'/>
+      <source bridge='br0'/>
+      <model type='e1000'/>
+    </interface>
+    <serial type='pty'>
+      <source path='/dev/pts/0'/>
+      <target type='isa-serial' port='0'>
+        <model name='isa-serial'/>
+      </target>
+      <alias name='serial0'/>
+    </serial>
+    <console type='pty' tty='/dev/pts/0'>
+      <source path='/dev/pts/0'/>
+      <target type='serial' port='0'/>
+      <alias name='serial0'/>
+    </console>
+    <input type='mouse' bus='ps2'>
+      <alias name='input0'/>
+    </input>
+    <input type='keyboard' bus='ps2'>
+      <alias name='input1'/>
+    </input>
+    <input type='tablet' bus='usb'>
+      <alias name='input2'/>
+      <address type='usb' bus='0' port='1'/>
+    </input>
+    <input type='keyboard' bus='usb'>
+      <alias name='input3'/>
+      <address type='usb' bus='0' port='2'/>
+    </input>
+
+    <graphics type='vnc' port='-1' autoport='yes' listen='0.0.0.0' keymap='en-us'/>
+  </devices>
+  <features>
+    <acpi default='on' toggle='yes'/>
+    <apic default='on' toggle='yes'/>
+  </features>
+</domain>
